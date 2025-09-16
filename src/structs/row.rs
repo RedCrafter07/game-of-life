@@ -1,4 +1,4 @@
-use std::fmt::Display;
+use std::{fmt::Display, process};
 
 use crate::{structs::ruleset_parser::RulesetParser, util::get_arg_or_default::get_arg_or_default};
 
@@ -16,10 +16,23 @@ impl Row {
 
 impl Default for Row {
     fn default() -> Self {
+        let dead = get_arg_or_default("DEAD_CELL", ".".into()).to_owned();
+        let alive = get_arg_or_default("LIVING_CELL", "x".into()).to_owned();
+
+        if dead.len() != 1 {
+            eprintln!("Value for dead cell is not one character!");
+            process::exit(1);
+        }
+
+        if alive.len() != 1 {
+            eprintln!("Value for living cell is not one character!");
+            process::exit(1);
+        }
+
         Row {
             row: Vec::new(),
-            dead: get_arg_or_default("DEAD_CELL", ".".into()).to_owned(),
-            alive: get_arg_or_default("LIVING_CELL", "x".into()).to_owned(),
+            dead,
+            alive,
         }
     }
 }
