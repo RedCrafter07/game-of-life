@@ -1,6 +1,6 @@
 use std::fmt::Display;
 
-use crate::structs::ruleset_parser::RulesetParser;
+use crate::{structs::ruleset_parser::RulesetParser, util::get_arg_or_default::get_arg_or_default};
 
 pub struct Row {
     row: Vec<bool>,
@@ -18,8 +18,8 @@ impl Default for Row {
     fn default() -> Self {
         Row {
             row: Vec::new(),
-            dead: ".".to_owned(),
-            alive: "x".to_owned(),
+            dead: get_arg_or_default("DEAD_CELL", ".".into()).to_owned(),
+            alive: get_arg_or_default("LIVING_CELL", "x".into()).to_owned(),
         }
     }
 }
