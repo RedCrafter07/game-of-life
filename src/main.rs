@@ -13,12 +13,17 @@ fn main() {
 
     let mut input = Row::from(user_input::get_start(&args));
 
+    let iterations: usize = env::var("ITERATIONS")
+        .unwrap_or("20".to_string())
+        .parse()
+        .expect("Invalid number!");
+
     if args.len() > 2 {
         // If user provided start without entering manually, print it
         println!("{input}");
     }
 
-    for _ in 0..20 {
+    for _ in 0..iterations {
         input.compute_row(&ruleset);
         println!("{input}");
     }
